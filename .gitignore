@@ -99,3 +99,5 @@ ENV/
 
 # mypy
 .mypy_cache/
+YOUR-FILE-WITH-SENSITIVE-DATA
+github
