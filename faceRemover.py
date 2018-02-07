@@ -1,10 +1,11 @@
 # This program creates a profile for all given face file.
+# Alpha 1 released by axmmisaka. 2018/02/08 0:43 UTC+8
 import sys
 import os
 import getopt
 from PIL import Image
-
-def profileCreate(filename, path, isFolder, inputName):
+from coverFace import coverFace
+def faceRemove(filename, path, maskpath, isFolder, inputName):
     if isFolder:
         #Read all files
         files = os.listdir(filename)
@@ -13,11 +14,16 @@ def profileCreate(filename, path, isFolder, inputName):
     else:
         files = [filename]
 
+    masklist = os.listdir(maskpath)
+
     allFaceEncodings = []
     allNames = []
     faceCounter = 0;
     for picname in files:
+        savename = path+picname.rpartition('.')[0]+"_masked."+picname.rpartition('.')[2]
         picture = face_recognition.load_image_file(path+picname)
+        originalpic = Image.open(path+picname)
+        originalpic.load()
         faceLocations = face_recognition.face_locations(picture)
         faceEncodings = face_recognition.face_encodings(picture, faceLocations)
         
@@ -30,8 +36,13 @@ def profileCreate(filename, path, isFolder, inputName):
                 print("I found one unknown face in file {0}.".format(picname))
                 #Not duplicated
                 faceCounter += 1
-                
+
+                if faceCounter > len(masklist):
+                    print("Insufficent masks. Exiting...")
+                    exit()
+
                 allFaceEncodings.append(faceEncoding)
+
                 if inputName:
                     top, right, bottom, left = faceLocation
                     
@@ -46,11 +57,23 @@ def profileCreate(filename, path, isFolder, inputName):
                     allNames.append(name)
                 else:
                     allNames.append(str(faceCounter))
+                # use allFaceEncodings here because sometimes matchedFace is not initialized.
+                faceCorrespondingMask = len(allFaceEncodings) - 1
+                print("(DEBUG)I am using {} as the rage.".format(faceCorrespondingMask))
             else:
+                # This is the same as the offical example. As it must be an old face, this is totally ok unlike in line 60
                 firstMatchIndex = matchedFace.index(True)
                 existName = allNames[firstMatchIndex]
-                print("I found an existing face and I am ignoring it. This person is probably: "+existName)
+                print("I found an existing face in {0} and I am ignoring it. This person is probably{1}: ".format(picname, existName))
+                faceCorrespondingMask = firstMatchIndex
+                print("(DEBUG)I am using {} as the rage.".format(faceCorrespondingMask))
+            #mask every face
+            mask = Image.open(maskpath+"/"+masklist[faceCorrespondingMask])
+            coverFace(originalpic, faceLocation, mask)
+        originalpic.save(savename)
 
+                    
+                    
     print("I found {0} faces, they are: ".format(faceCounter),end="")
     for name in allNames:
         print(name+" ",end = "")
@@ -63,7 +86,7 @@ def profileCreate(filename, path, isFolder, inputName):
 # Load arguments
 if __name__ == '__main__':
     try:
-        options, arguments = getopt.getopt(sys.argv[1:],"hni:f:",["help","inputname","input=","folder="])
+        options, arguments = getopt.getopt(sys.argv[1:],"hni:f:m:",["help","inputname","input=","folder=","masks="])
     except getopt.GetoptError:
         print("Argument Error")
 
@@ -92,10 +115,12 @@ if __name__ == '__main__':
                 else:
                     filename = value
                     path = value+"/"
+            elif name in ("-m","--masks"):
+                maskpath = value
     print("Initializing railgun, please wait...")
     import face_recognition
     print("Done.")
-    result = profileCreate(filename, path, isFolder, inputName)
+    result = faceRemove(filename, path, maskpath, isFolder, inputName)
     print(result)
 
 
