@@ -14,9 +14,9 @@ Will be turned into:
 Also, right now, in one process, same person will be replaced with the same picture. Disable of this feature and load profile will be added in the future.   
 
 For example, in the same run, famous Ancelotti+Zidane picture turns from this:   
-![AnZidaze](https://github.com/axmmisaka/autoFaceRemove/raw/master/Bayerns/AnZidane.jpg)
+![AnZidaze](https://github.com/axmmisaka/autoFaceRemove/raw/master/Bayerns/AnZidaze.jpg)
 will become this:   
-![AnZidazeRaged](https://github.com/axmmisaka/autoFaceRemove/raw/master/Bayerns/AnZidane_masked.jpg)
+![AnZidazeRaged](https://github.com/axmmisaka/autoFaceRemove/raw/master/Bayerns/AnZidaze_masked.jpg)
 
 ## Requirements
 A computer with linux OS. I am using Ubuntu 17.04 zesty - although its Chinese input is sh\*t.   
