@@ -1,2 +1,13 @@
 language: python
+  - "3.5"
+  - "3.6"
 sudo: false
+group: stable
+dist: trusty
+os: linux
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -qq cmake python-numpy python-scipy libboost-python-dev
+install:
+  pip3 install -r requirements.txt
+ 
