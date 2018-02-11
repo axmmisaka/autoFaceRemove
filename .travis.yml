@@ -1,3 +1,2 @@
-language:python
-rvm:
-  - 3.1
+language: python
+sudo: false
