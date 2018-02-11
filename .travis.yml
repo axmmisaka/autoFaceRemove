@@ -7,7 +7,7 @@ dist: trusty
 os: linux
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -qq cmake python-numpy python-scipy libboost-python-dev
+  - sudo apt-get install -qq cmake python-numpy python-scipy libboost-python-dev python3
 install:
   pip3 install -r requirements.txt
  
