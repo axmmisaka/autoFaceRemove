@@ -1,7 +1,7 @@
 language: python
   - "3.5"
   - "3.6"
-sudo: false
+sudo: required
 group: stable
 dist: trusty
 os: linux
