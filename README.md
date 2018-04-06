@@ -1,4 +1,7 @@
 # autoFaceRemove
+
+[![Building Status](https://travis-ci.org/axmmisaka/autoFaceRemove.svg?branch=master)](https://travis-ci.org/axmmisaka/autoFaceRemove)
+
 Removes faces in a picture using rage comic or something else interesting.   
 
 Built using ageitgey/face\_recognition. A huge thank to this developer!   
@@ -21,7 +24,7 @@ will become this:
 ## Requirements
 A computer with linux OS. I am using Ubuntu 17.04 zesty - although its Chinese input is sh\*t.   
 Python3 and pip3 - python and pip should be fine, but I didn't test them.   
-face\_recognition package. You can find it (here)[https://github.com/ageitgey/face_recognition] and know how to install it.    
+face\_recognition package. You can find it [here](https://github.com/ageitgey/face_recognition) and know how to install it.    
 
 ## Usage
 Use
